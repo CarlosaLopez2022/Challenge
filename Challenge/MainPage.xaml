@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Challenge.ViewModels"
+             xmlns:converters="clr-namespace:Challenge.Converters"
+             xmlns:data="clr-namespace:Challenge.Data"
+             x:DataType="vm:MainPageViewModel"
+             x:Class="Challenge.MainPage"
+             Title="{Binding PageTitle}">
+    <ContentPage.Resources>
+        <converters:TemperatureToColorConverter x:Key="TemperatureToColorConverter"/>
+    </ContentPage.Resources>
+
+    <RefreshView IsRefreshing="{Binding IsBusy}" Command="{Binding GetWeatherCommand}">
+        <VerticalStackLayout Padding="5">
+            <Label Text="City weather" HorizontalOptions="Center"
+                   FontSize="30" FontAttributes="Bold"/>
+            <CollectionView ItemsSource="{Binding Cities}"
+                            SelectionMode="Single"
+                            SelectedItem="{Binding SelectedCity}"
+                            SelectionChangedCommand="{Binding GoToDetailsCommand}"
+                            SelectionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path=SelectedItem}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="data:City">
+                        <Grid ColumnDefinitions="*" RowDefinitions="*,*">
+                            <Label Text="{Binding Name}" Grid.Row="0" FontAttributes="Bold"/>
+                            <VerticalStackLayout Grid.Row="1">
+                                <Label Text="{Binding Root.temperature}"
+                                       TextColor="{Binding Root.temperature,Converter={x:StaticResource TemperatureToColorConverter}}"/>
+                                <Label Text="{Binding Root.description}"/>
+                                <Label Text="{Binding LastUpdated}"/>
+                                <BoxView HeightRequest="5"/>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+            <Button Text="Get weather" Command="{Binding GetWeatherCommand}" 
+                    WidthRequest="200" HeightRequest="50" Margin="0,10,0,0"/>
+        </VerticalStackLayout>
+    </RefreshView>
+
+</ContentPage>

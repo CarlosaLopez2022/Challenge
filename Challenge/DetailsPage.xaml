@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:data ="clr-namespace:Challenge.Data"
+             xmlns:vm="clr-namespace:Challenge.ViewModels"
+             x:DataType="vm:DetailsPageViewModel"
+             x:Class="Challenge.DetailsPage"
+             Title="{Binding PageTitle}">
+    <RefreshView IsRefreshing="{Binding IsBusy}" Command="{Binding RefreshCommand}">
+        <VerticalStackLayout Padding="10">
+            <Label Text="{Binding CityName}"
+           VerticalOptions="Center" 
+           HorizontalOptions="Center"
+           FontAttributes="Bold"
+           FontSize="25"/>
+            <Grid ColumnDefinitions="Auto,*"
+          ColumnSpacing="10" Margin="0,0,0,20"
+          RowDefinitions="*,*,*,*">
+                <Label Text="Temperature: " FontAttributes="Bold"
+               Grid.Row="0" Grid.Column="0"/>
+                <Label Text="{Binding Temperature}"
+               Grid.Row="0" Grid.Column="1"/>
+                <Label Text="Condition" FontAttributes="Bold"
+               Grid.Row="1" Grid.Column="0"/>
+                <Label Text="{Binding Condition}"
+               Grid.Row="1" Grid.Column="1"/>
+                <Label Text="Wind Speed: " FontAttributes="Bold"
+               Grid.Row="2" Grid.Column="0"/>
+                <Label Text="{Binding WindSpeed}"
+               Grid.Row="2" Grid.Column="1"/>
+                <Label Text="Days forecast" FontSize="25"
+               Grid.Row="3" Grid.ColumnSpan="2"/>
+            </Grid>
+            <CollectionView HeightRequest="400" 
+                    ItemsSource="{Binding Forecasts}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="data:Forecast">
+                        <Grid ColumnDefinitions="Auto,*"
+                      ColumnSpacing="10"
+                      RowDefinitions="*,*,*,*">
+
+                            <Label Text="Day: "
+                           Grid.Row="0" Grid.Column="0"/>
+                            <Label Text="{Binding day}"
+                           Grid.Row="0" Grid.Column="1"/>
+                            <Label Text="Condition"
+                           Grid.Row="1" Grid.Column="0"/>
+                            <Label Text="{Binding temperature}"
+                           Grid.Row="1" Grid.Column="1"/>
+                            <Label Text="Wind Speed: "
+                           Grid.Row="2" Grid.Column="0"/>
+                            <Label Text="{Binding wind}"
+                           Grid.Row="2" Grid.Column="1"/>
+                            <BoxView HeightRequest="5"
+                             Grid.Row="3" Grid.ColumnSpan="2"/>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+            <Button Text="Refresh" WidthRequest="200" Command="{Binding RefreshCommand}"/>
+        </VerticalStackLayout>
+    </RefreshView>
+</ContentPage>
