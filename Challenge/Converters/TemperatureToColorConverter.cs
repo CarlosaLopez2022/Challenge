@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Challenge.Converters
 {
-    public class TemperatureToColorConverter : IValueConverter
+    public class TemperatureToColorConverter : IValueConverter//optional 2. Converter for string text color depending on temperature values.
     {
         public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
-            Color color = Colors.Black;
+            Color color = Colors.Black;//default can be edited later on.
             if (value is string result)
             {
                 string cleaned = result.Replace("°C", "")
