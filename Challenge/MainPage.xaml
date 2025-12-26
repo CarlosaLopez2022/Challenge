@@ -6,7 +6,7 @@
              xmlns:data="clr-namespace:Challenge.Data"
              x:DataType="vm:MainPageViewModel"
              x:Class="Challenge.MainPage"
-             Title="{Binding PageTitle}">
+             Title="Pagina Prueba">
     <ContentPage.Resources>
         <converters:TemperatureToColorConverter x:Key="TemperatureToColorConverter"/>
     </ContentPage.Resources>
